@@ -30,6 +30,36 @@ public class TaskRepository {
         return null;
     }
 
+    public List<Task> findCompletedTask() throws TaskException {
+        List<Task> completedTasks = new ArrayList<>();
+
+        for(Task task : tasks) {
+            if(task.getCompleted()) {
+                completedTasks.add(task);
+            }
+        }
+
+        if(completedTasks.isEmpty()) {
+            throw new TaskException("There is any completed Task!");
+        }
+        return completedTasks;
+    }
+
+    public List<Task> findPendingTask() throws TaskException {
+        List<Task> pendingTasks = new ArrayList<>();
+
+        for(Task task : tasks) {
+            if(!task.getCompleted()) {
+                pendingTasks.add(task);
+            }
+        }
+
+        if(pendingTasks.isEmpty()) {
+            throw new TaskException("There is any pending Task!");
+        }
+        return pendingTasks;
+    }
+
     public void remove(Task task ) throws TaskException {
         if(task==null) {
             throw new TaskException("The task could not be null");
@@ -81,6 +111,17 @@ public class TaskRepository {
             throw new TaskException("The index is not found");
         }
         tasks.set(index, updatedTask);
+        TaskPersistence.saveTask(tasks);
+    }
+
+    public void updateTaskStatus(String id, Boolean completed) throws TaskException {
+        int index = findIndexById(id);
+
+        if(index==-1) {
+            throw new TaskException("The index is not found");
+        }
+
+        tasks.get(index).setCompleted(completed);
         TaskPersistence.saveTask(tasks);
     }
 }

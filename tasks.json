@@ -1,11 +1,5 @@
 [
   {
-    "id": "1",
-    "title": "hace tarea 1",
-    "description": "matematica",
-    "completed": false
-  },
-  {
     "id": "2",
     "title": "hace tarea",
     "description": "ciencias sociales",
@@ -16,5 +10,11 @@
     "title": "hacer ejercicio",
     "description": "ir al gym alas 5",
     "completed": false
+  },
+  {
+    "id": "4",
+    "title": "Hacer tarea",
+    "description": "matematicas",
+    "completed": true
   }
 ]

@@ -14,7 +14,7 @@ public class TaskController {
         this.taskRepository = taskRepository;
     }
 
-    public void addTask(String id, String title, String description, boolean completed) throws TaskException, TaskValidationException {
+    public void addTask(String id, String title, String description, Boolean completed) throws TaskException, TaskValidationException {
         validateTaskData(id, title, description, completed);
         Task task = new Task(id, title, description, completed);
         this.taskRepository.save(task);
@@ -40,7 +40,21 @@ public class TaskController {
         }
     }
 
-    public void updateTask(String id, String title, String description, boolean completed) throws TaskException, TaskValidationException {
+    public void showTasksCompleted() throws  TaskException {
+        List<Task> completedTasks = this.taskRepository.findCompletedTask();
+        for (Task task : completedTasks) {
+            System.out.println(task);
+        }
+    }
+
+    public void showTasksPending() throws  TaskException {
+        List<Task> pendingTasks = this.taskRepository.findPendingTask();
+        for (Task task : pendingTasks) {
+            System.out.println(task);
+        }
+    }
+
+    public void updateTask(String id, String title, String description, Boolean completed) throws TaskException, TaskValidationException {
         validateTaskData(id, title, description, completed);
         Task updatedTask = new Task(id, title, description, completed);
 
@@ -48,8 +62,15 @@ public class TaskController {
         System.out.println("Task updated: " + updatedTask);
     }
 
+    public void updateTask(String id, Boolean completed) throws TaskException, TaskValidationException {
+        validateTaskData(id, completed);
 
-    private void validateTaskData(String id, String title, String description, boolean completed) throws TaskValidationException {
+        this.taskRepository.updateTaskStatus(id, completed);
+        System.out.println("Task status updated: " + completed);
+    }
+
+
+    private void validateTaskData(String id, String title, String description, Boolean completed) throws TaskValidationException {
         if(id == null || id.trim().isEmpty()){
             throw new TaskValidationException("Task id cannot be empty");
         }
@@ -60,6 +81,21 @@ public class TaskController {
 
         if(description == null || description.trim().isEmpty()){
             throw new TaskValidationException("Task description cannot be empty");
+        }
+
+        if(completed == null){
+            throw new TaskValidationException("Task completed cannot be null");
+        }
+
+    }
+
+    private void validateTaskData(String id, Boolean completed) throws TaskValidationException {
+        if(id == null || id.trim().isEmpty()){
+            throw new TaskValidationException("Task id cannot be empty");
+        }
+
+        if(completed == null){
+            throw new TaskValidationException("Task completed cannot be null");
         }
 
     }
