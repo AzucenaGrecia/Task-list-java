@@ -114,17 +114,51 @@ public class TaskView {
     }
 
     private Task getTaskInput(){
-        System.out.println("Enter Task ID: ");
-        String id = scanner.nextLine();
+        String id;
+        do {
+            System.out.println("Enter Task ID: ");
+            id = scanner.nextLine();
 
-        System.out.println("Enter Task Title: ");
-        String title = scanner.nextLine();
+            if(id.isEmpty()) {
+                System.out.println("Task ID cannot be empty, please try again");
+            }
+        } while (id.isEmpty());
 
-        System.out.println("Enter Task Description: ");
-        String description = scanner.nextLine();
 
-        System.out.println("Is Task Completed ? (true/false): ");
-        Boolean completed = Boolean.parseBoolean(scanner.nextLine());
+        String title;
+        do{
+            System.out.println("Enter Task Title: ");
+            title = scanner.nextLine();
+
+            if(title.isEmpty()) {
+                System.out.println("Task Title cannot be empty, please try again");
+            }
+        }while(title.isEmpty());
+
+        String description;
+        do {
+            System.out.println("Enter Task Description: ");
+            description = scanner.nextLine();
+
+            if(description.isEmpty()) {
+                System.out.println("Task Description cannot be empty, please try again");
+            }
+        } while(description.isEmpty());
+
+
+        Boolean completed = null;
+        while (completed == null) {
+            System.out.println("Task is Completed? (True/False):  ");
+            String input = scanner.nextLine().trim().toLowerCase();
+
+            if(input.equals("true")) {
+                completed = true;
+            } else if (input.equals("false")) {
+                completed = false;
+            } else {
+                System.out.println("Invalid task status, please try again: Just True or False ");
+            }
+        }
 
         return new Task(id, title, description, completed);
     }
