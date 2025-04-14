@@ -5,6 +5,7 @@ import dev.devtalles.proyecto.task.exceptions.TaskException;
 import dev.devtalles.proyecto.task.exceptions.TaskValidationException;
 import dev.devtalles.proyecto.task.model.Task;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class TaskView {
@@ -198,6 +199,7 @@ public class TaskView {
             if(id.isEmpty()) {
                 System.out.println("Task ID cannot be empty, please try again");
             }
+
         } while (id.isEmpty());
 
 
