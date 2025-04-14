@@ -11,6 +11,5 @@ public class Main {
         TaskView taskView = new TaskView(taskController);
 
         taskView.showMenu();
-
     }
 }

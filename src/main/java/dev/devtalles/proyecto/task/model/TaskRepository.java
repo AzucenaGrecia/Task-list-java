@@ -1,18 +1,24 @@
 package dev.devtalles.proyecto.task.model;
 
 import dev.devtalles.proyecto.task.exceptions.TaskException;
+import dev.devtalles.proyecto.task.persistence.TaskPersistence;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TaskRepository {
-    List<Task> tasks = new ArrayList<>();
+    List<Task> tasks;
+
+    public TaskRepository() {
+        tasks = TaskPersistence.loadTasks();
+    }
 
     public void save(Task task) throws TaskException {
         if(task==null) {
             throw new TaskException("The task could not be null");
         }
         tasks.add(task);
+        TaskPersistence.saveTask(tasks);
     }
 
     public Task findByID(String id) {
@@ -34,6 +40,7 @@ public class TaskRepository {
         }
 
         tasks.remove(task);
+        TaskPersistence.saveTask(tasks);
     }
 
     public void remove(String id ) throws TaskException {
@@ -44,6 +51,7 @@ public class TaskRepository {
         }
 
         tasks.remove(task);
+        TaskPersistence.saveTask(tasks);
     }
 
     public List<Task> findAll() throws TaskException {
@@ -73,5 +81,6 @@ public class TaskRepository {
             throw new TaskException("The index is not found");
         }
         tasks.set(index, updatedTask);
+        TaskPersistence.saveTask(tasks);
     }
 }
